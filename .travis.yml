@@ -1,0 +1,19 @@
+language: cpp
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+before_install:
+  - sudo add-apt-repository ppa:kubuntu-ppa/backports -y
+  - sudo apt-get update -qq
+  - sudo apt-get install --only-upgrade cmake
+#  - sudo apt-get install build-essential
+  - git submodule update --init --recursive
+compiler:
+  - gcc
+  - clang
+script:
+  - cmake --version
+  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON test
+  - cat compile_commands.json
+  - make
