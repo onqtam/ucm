@@ -7,7 +7,7 @@ sudo: false
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+    - ppa:kubuntu-ppa/backports
     packages:
     - cmake
 before_install:
