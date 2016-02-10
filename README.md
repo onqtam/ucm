@@ -8,9 +8,9 @@ ucm - useful cmake macros
 Build status
 ------------
 
-| Service               | Status                                                   |
-|-----------------------|----------------------------------------------------------|
-| Travis-CI (Linux/OSX) | [![Linux Status](https://travis-ci.org/onqtam/ucm.svg?branch=master)](https://travis-ci.org/onqtam/ucm)|
+| Service               | Status |
+|-----------------------|--------|
+| Travis-CI (Linux/OSX) | [![Linux/OSX Status](https://travis-ci.org/onqtam/ucm.svg?branch=master)](https://travis-ci.org/onqtam/ucm)|
 | Appveyor (Windows)    | [![Windows Status](https://ci.appveyor.com/api/projects/status/m80f32y206l9tb52?svg=true)](https://ci.appveyor.com/project/onqtam/ucm)|
 
 Todo
