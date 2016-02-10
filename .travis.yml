@@ -7,7 +7,7 @@ sudo: false
 addons:
   apt:
     sources:
-    - ppa:kubuntu-ppa/backports
+    - kubuntu-ppa/backports
     packages:
     - cmake
 before_install:
