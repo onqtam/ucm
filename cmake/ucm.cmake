@@ -199,7 +199,7 @@ macro(ucm_dir_list thedir result)
 endmacro()
 
 # ucm_trim_front_words
-# Trims X times the front word from a string separated with "/" and removes 
+# Trims X times the front word from a string separated with "/" and removes
 # the front "/" characters after that (used for filters for visual studio)
 macro(ucm_trim_front_words source out num_filter_trims)
     set(result "${source}")
@@ -306,7 +306,7 @@ macro(ucm_add_dir_impl result rec trim dirs_in)
         # Also OSX is case insensitive like windows...
         set(additional_file_extensions "")
         if(CMAKE_HOST_UNIX AND NOT APPLE)
-            set(additional_file_extensions 
+            set(additional_file_extensions
                 "${cur_dir}*.CPP"
                 "${cur_dir}*.C"
                 "${cur_dir}*.H"
@@ -365,7 +365,7 @@ endmacro()
 # and generates filters according to their location (accepts relative paths only).
 # Also this macro trims X times the front word from the filter string for visual studio filters.
 macro(ucm_add_dirs)
-    cmake_parse_arguments(ARG "REC;" "TO;FILTER_POP" "" ${ARGN})
+    cmake_parse_arguments(ARG "RECURSIVE" "TO;FILTER_POP" "" ${ARGN})
     
     if(${ARG_TO} STREQUAL "")
         message(FATAL_ERROR "Need to pass TO and a variable name to ucm_add_dirs()")
@@ -375,7 +375,7 @@ macro(ucm_add_dirs)
         set(ARG_FILTER_POP 0)
     endif()
     
-    ucm_add_dir_impl(${ARG_TO} ${ARG_REC} ${ARG_FILTER_POP} "${ARG_UNPARSED_ARGUMENTS}")
+    ucm_add_dir_impl(${ARG_TO} ${ARG_RECURSIVE} ${ARG_FILTER_POP} "${ARG_UNPARSED_ARGUMENTS}")
 endmacro()
 
 # ucm_add_target
@@ -488,9 +488,9 @@ macro(ucm_add_target)
     # print a message if the target was requested to be cotired but it couldn't
     if(wanted_cotire AND NOT ucm_with_cotire)
         if(NOT COMMAND cotire)
-            message(WARNING "Target \"${ARG_NAME}\" not cotired because cotire isn't loaded")
+            message(AUTHOR_WARNING "Target \"${ARG_NAME}\" not cotired because cotire isn't loaded")
         else()
-            message(WARNING "Target \"${ARG_NAME}\" not cotired because cotire is older than the required version")
+            message(AUTHOR_WARNING "Target \"${ARG_NAME}\" not cotired because cotire is older than the required version")
         endif()
     endif()
 endmacro()

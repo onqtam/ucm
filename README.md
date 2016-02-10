@@ -5,6 +5,12 @@ ucm - useful cmake macros
 [![Version](https://badge.fury.io/gh/onqtam%2Fucm.svg)](https://github.com/onqtam/ucm/releases)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
+[cotire](https://github.com/sakra/cotire) is an optional submodule for some macros and in order for them to work fully either do ```git submodule update --init --recursive``` after cloning or include cotire in your cmake files before ucm.
+
+Tested with MSVC/GCC/Clang (Intel icc should work too).
+
+Contribution of new macros is welcome!
+
 Build status
 ------------
 
@@ -13,12 +19,10 @@ Build status
 | Travis-CI (Linux/OSX) | [![Linux/OSX Status](https://travis-ci.org/onqtam/ucm.svg?branch=master)](https://travis-ci.org/onqtam/ucm)|
 | Appveyor (Windows)    | [![Windows Status](https://ci.appveyor.com/api/projects/status/m80f32y206l9tb52?svg=true)](https://ci.appveyor.com/project/onqtam/ucm)|
 
-Tested with MSVC/GCC/Clang. Intel should work too.
-
 Documentation
 -------------
 
-##### <a name="menu"></a>Macros:
+##### <a name="macros"></a>Macros:
 
 - [ucm_print_flags](#ucm_print_flags)
 - [ucm_add_flags](#ucm_add_flags)
@@ -34,8 +38,6 @@ Documentation
 - [ucm_add_target](#ucm_add_target)
 
 Macro notation: ```myMacro(NAME <name> [FLAG])``` - ```NAME``` and a name after it are required and anything that is in [] is optional.
-
-Contribution of new macros is welcome!
 
 ##### <a name="ucm_print_flags"></a>macro ```ucm_print_flags()```
 
@@ -113,13 +115,16 @@ CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 
 Adds the sources to the sources variable and sets up filters for the solution explorer of Visual Studio (probably for XCode/CodeBlocks too).
 
-The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` we would have by default ```dir1/test``` as nested filters in the solution explorer. This can be controlled with ```FILTER_POP``` - 1 would result in only ```test``` as a filter and 2 would result in no filter for ```a.cpp```.
+The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` we would have by default ```dir1/test``` as nested filters in the solution explorer. This can be controlled with ```FILTER_POP``` - 1 would result in only ```test``` as a filter and 2 would result in no filter for ```a.cpp``` - example:
 
-##### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [REC] [FILTER_POP <NUM>])```
+| ```ucm_add_files(util/level1/bla_h1.h util/level1/bla_h2.h TO sources FILTER_POP 0)``` | ![filter_0](test/doc_data/filter_0.png) |
+| ```ucm_add_files(util/level1/bla_h1.h util/level1/bla_h2.h TO sources FILTER_POP 1)``` | ![filter_1](test/doc_data/filter_1.png) |
+
+##### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [RECURSIVE] [FILTER_POP <NUM>])```
 
 Adds all sources (sources and headers with all valid c/c++ extensions) from the directories given.
 
-Can be recursive with the ```REC``` flag.
+Can be recursive with the ```RECURSIVE``` flag.
 
 Like ```ucm_add_files()``` filters for the solution explorer of IDEs can be controlled with ```FILTER_POP```.
 
@@ -149,7 +154,7 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_files(utils/deprecated.h FROM sources)
 ```
 
-##### <a name="ucm_remove_directories"></a>**macro** ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources>)```
+##### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources>)```
 
 Removes all source files from the given directories from the sources list - example:
 
@@ -158,9 +163,11 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_directories(utils/deprecated utils/experimental FROM sources)
 ```
 
-##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <pch>] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
+##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <header_file>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
 
+A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target.
 
+cotire is a submodule of the repository so make sure
 
 
 
