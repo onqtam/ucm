@@ -19,7 +19,6 @@ Todo
 - test osx
 - finish the documentation
 - continue on https://github.com/sakra/cotire/issues/68
-- resolve issue
 
 Documentation
 -------------
