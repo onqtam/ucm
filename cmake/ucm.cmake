@@ -232,6 +232,7 @@ macro(ucm_remove_files)
 endmacro()
 
 # ucm_remove_directories
+# Removes all source files from the given directories from the sources list
 macro(ucm_remove_directories)
     cmake_parse_arguments(ARG "" "FROM" "" ${ARGN})
     

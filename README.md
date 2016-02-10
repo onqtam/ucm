@@ -167,7 +167,7 @@ ucm_remove_directories(utils/deprecated utils/experimental FROM sources)
 
 ##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <EXECUTABLE|STATIC|SHARED|MODULE> SOURCES src1 src2 src3... [PCH_FILE <pch>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
 
-A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target. For information about unity builds in general go to the cotire page. A unity-enabled target may build up to 90% faster than a normal one.
+A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target. For information about unity builds in general go to the cotire page. A unity-enabled target may get built up to 90% faster than a normal one.
 
 ```CMake
 ucm_add_target(NAME example TYPE EXECUTABLE SOURCES "${sources}" UNITY UNITY_EXCLUDED "separate/some2.cpp")
@@ -175,21 +175,21 @@ ucm_add_target(NAME example TYPE EXECUTABLE SOURCES "${sources}" UNITY UNITY_EXC
 
 When the ```UCM_UNITY_BUILD``` ucm option is set to ```ON``` (```OFF``` by default) a target registered like in the example above will actually result in 2 targets added - the unity target with ```example``` as a name (included in the build by default) and the original target with ```example_ORIGINAL``` as a name (excluded from the build by default). This allows the user to browse and modify the sources in the original target properly within the IDE.
 
-When new sources are added to the original target the unity target will be updated too by cotire.
+When new sources are added to the original target the unity target will be updated accordingly by cotire.
 
-Targets can be excluded from unity builds by adding them in the ```UCM_UNITY_BUILD_EXCLUDE_TARGETS``` list when invoking cmake (so if a target becomes problematic in a unity build or if you want to iterate fast on a particular target and want to compile its sources separately).
+Targets can be excluded from unity builds by adding them in the ```UCM_UNITY_BUILD_EXCLUDE_TARGETS``` list when invoking cmake (handy if a target becomes problematic in a unity build or if you want to iterate fast on a particular target and want to compile it's sources separately).
 
-To explicitly say how many source files should go into a unity source use CPP_PER_UNITY (default is 100). Another option is to pass not a number but a "-jX" after CPP_PER_UNITY and that would mean to divide the sources into X unity sources.
+To explicitly say how many source files should go into a unity source use CPP_PER_UNITY (default is 100). Another option is to pass not a number but ```-jX``` after ```CPP_PER_UNITY``` and that would mean dividing the sources into X unity sources.
 
-UNITY_EXCLUDED - list of files from the target that should be excluded from unify-ing (will be used normally by themselves).
+UNITY_EXCLUDED - list of files from the target that should be excluded from unify-ing (will be used normally by themselves - can be used to fix compilation errors).
 
-PCH_FILE - a header file that will be precompiled and prefixed to all sources (they won't even need to explicitly #include it).
+PCH_FILE - a header file that will be precompiled and prefixed to all sources (they won't even need to explicitly ```#include``` it).
 
 Unity examples - given 100 .cpp files in the target:
 
-- "CPP_PER_UNITY 5" would mean 20 .cxx unity files including 5 of the original .cpp files each
-- "CPP_PER_UNITY 10" would mean 10 .cxx unity files including 10 of the original .cpp files each
-- "CPP_PER_UNITY -j8" would mean 8 .cxx unity files dividing the original 100 among them
+- ```CPP_PER_UNITY 5``` would mean 20 .cxx unity files including 5 of the original .cpp files each
+- ```CPP_PER_UNITY 10``` would mean 10 .cxx unity files including 10 of the original .cpp files each
+- ```CPP_PER_UNITY -j8``` would mean 8 .cxx unity files dividing the original 100 among them
 
 How it looks in the IDE:
 
