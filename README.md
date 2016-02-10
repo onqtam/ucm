@@ -117,7 +117,7 @@ Adds the sources to the sources variable and sets up filters for the solution ex
 
 The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` we would have by default ```dir1/test``` as nested filters in the solution explorer. This can be controlled with ```FILTER_POP``` - 1 would result in only ```test``` as a filter and 2 would result in no filter for ```a.cpp``` - example:
 
-| | |
+| col1 | col2 |
 |-|-|
 | ```ucm_add_files(util/level1/bla_h1.h util/level1/bla_h2.h TO sources FILTER_POP 0)``` | ![filter_0](test/doc_data/filter_0.png) |
 | ```ucm_add_files(util/level1/bla_h1.h util/level1/bla_h2.h TO sources FILTER_POP 1)``` | ![filter_1](test/doc_data/filter_1.png) |
