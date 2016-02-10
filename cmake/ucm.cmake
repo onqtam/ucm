@@ -62,6 +62,10 @@ endmacro()
 macro(ucm_set_runtime)
     cmake_parse_arguments(ARG "STATIC;DYNAMIC;PRINT_FLAGS" "" "" ${ARGN})
     
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        message(AUTHOR_WARNING "ucm_set_runtime() does not support clang yet!")
+    endif()
+    
     # gather list of flags to handle
     set(flags_configs "")
     if("${CMAKE_CONFIGURATION_TYPES}" STREQUAL "")
@@ -86,7 +90,7 @@ macro(ucm_set_runtime)
     # add/replace the flags
     if("${ARG_STATIC}")
         foreach(flags ${flags_configs})
-            if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+            if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
                 set(${flags} "${${flags}} -static-libstdc++ -static-libgcc")
             elseif(MSVC)
                 if(${flags} MATCHES "/MD")

@@ -16,6 +16,7 @@ Build status
 Todo
 ----
 
+- investigate the static runtime linking with clang - warning on linux and error on osx... maybe a linker option?
 - finish the documentation
 - continue on https://github.com/sakra/cotire/issues/68
 
