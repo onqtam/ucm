@@ -3,17 +3,9 @@ notifications:
   email:
     on_success: change
     on_failure: change
-sudo: false
-addons:
-  apt:
-    sources:
-    - kubuntu-ppa/backports
-    packages:
-    - cmake
+sudo: required
+dist: trusty
 before_install:
-#  - sudo add-apt-repository ppa:kubuntu-ppa/backports -y
-#  - sudo apt-get update -qq
-#  - sudo apt-get install --only-upgrade cmake
   - git submodule update --init --recursive
 compiler:
   - gcc
