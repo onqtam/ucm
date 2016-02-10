@@ -40,6 +40,7 @@ Documentation
 Macro notation: ```myMacro(NAME <name> [FLAG])``` - ```NAME``` and a name after it are required and anything that is in [] is optional.
 
 ##### <a name="ucm_print_flags"></a>macro ```ucm_print_flags()```
+<hr>
 
 Prints all relevant flags - for example with ```-DCMAKE_BUILD_TYPE=Debug``` given to cmake for makefiles:
 
