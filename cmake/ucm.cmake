@@ -62,7 +62,7 @@ endmacro()
 macro(ucm_set_runtime)
     cmake_parse_arguments(ARG "STATIC;DYNAMIC;PRINT_FLAGS" "" "" ${ARGN})
     
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND ${PRINT_FLAGS} STREQUAL "")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND "${ARG_PRINT_FLAGS}" STREQUAL "")
         message(AUTHOR_WARNING "ucm_set_runtime() does not support clang yet!")
     endif()
     
