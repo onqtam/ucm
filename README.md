@@ -17,6 +17,7 @@ Todo
 ----
 
 - test osx
+- run on travis container build
 - finish the documentation
 - continue on https://github.com/sakra/cotire/issues/68
 
