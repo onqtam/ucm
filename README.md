@@ -22,7 +22,7 @@ Build status
 Documentation
 -------------
 
-##### <a name="macros"></a>Macros:
+#### <a name="macros"></a>Macros:
 
 - [ucm_print_flags](#ucm_print_flags)
 - [ucm_add_flags](#ucm_add_flags)
@@ -39,7 +39,7 @@ Documentation
 
 Macro notation: ```myMacro(NAME <name> [FLAG])``` - ```NAME``` and a name after it are required and anything that is in [] is optional.
 
-##### <a name="ucm_print_flags"></a>macro ```ucm_print_flags()```
+#### <a name="ucm_print_flags"></a>macro ```ucm_print_flags()```
 <hr>
 
 Prints all relevant flags - for example with ```-DCMAKE_BUILD_TYPE=Debug``` given to cmake for makefiles:
@@ -62,7 +62,8 @@ CMAKE_C_FLAGS:  /DWIN32 /D_WINDOWS /W3 /W4
 CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 ```
 
-##### <a name="ucm_add_flags"></a>macro ```ucm_add_flags([C] [CXX] [CONFIG config] flag1 flag2 flag3...)```
+#### <a name="ucm_add_flags"></a>macro ```ucm_add_flags([C] [CXX] [CONFIG config] flag1 flag2 flag3...)```
+<hr>
 
 Append the flags to a different set depending on it's options - examples:
 
@@ -73,7 +74,8 @@ ucm_add_flags(CXX -O3) # will add to CMAKE_CXX_FLAGS
 ucm_add_flags(-O3 -Wall CONFIG Debug) # will add to CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
 ```
 
-##### <a name="ucm_set_flags"></a>macro ```ucm_set_flags([C] [CXX] [CONFIG <config>] flag1 flag2 flag3...)```
+#### <a name="ucm_set_flags"></a>macro ```ucm_set_flags([C] [CXX] [CONFIG <config>] flag1 flag2 flag3...)```
+<hr>
 
 Removes the old and sets the new flags to a different set depending on it's options - examples:
 
@@ -84,7 +86,8 @@ ucm_set_flags(CXX -O3) # will set CMAKE_CXX_FLAGS
 ucm_set_flags(-O3 -Wall CONFIG Debug) # will set CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
 ```
 
-##### <a name="ucm_set_runtime"></a>macro ```ucm_set_runtime([STATIC][DYNAMIC])```
+#### <a name="ucm_set_runtime"></a>macro ```ucm_set_runtime([STATIC][DYNAMIC])```
+<hr>
 
 Sets the runtime to static/dynamic - for example with Visual Studio as a generator:
 
@@ -112,13 +115,15 @@ CMAKE_C_FLAGS:  /DWIN32 /D_WINDOWS /W3 /W4
 CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 ```
 
-##### <a name="ucm_add_files"></a>macro ```ucm_add_files(src1 src2 scr3... TO <sources> [FILTER_POP <num>])```
+#### <a name="ucm_add_files"></a>macro ```ucm_add_files(src1 src2 scr3... TO <sources> [FILTER_POP <num>])```
+<hr>
 
 Adds the sources to the sources variable and sets up filters for the solution explorer of Visual Studio (probably for XCode/CodeBlocks too).
 
 The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` we would have by default ```dir1/test``` as nested filters in the solution explorer. This can be controlled with ```FILTER_POP``` - 1 would result in only ```test``` as a filter and 2 would result in no filter for ```a.cpp``` - see [ucm_add_dirs](#ucm_add_dirs) for a visual example.
 
-##### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [RECURSIVE] [FILTER_POP <NUM>])```
+#### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [RECURSIVE] [FILTER_POP <NUM>])```
+<hr>
 
 Adds all sources (sources and headers with all valid c/c++ extensions) from the directories given.
 
@@ -131,7 +136,8 @@ Like ```ucm_add_files()``` filters for the solution explorer of IDEs can be cont
 | ```ucm_add_dirs(util TO sources)```              | ![0](test/doc_data/filter_0.png) |
 | ```ucm_add_dirs(util TO sources FILTER_POP 1)``` | ![1](test/doc_data/filter_1.png) |
 
-##### <a name="ucm_count_sources"></a>macro ```ucm_count_sources(src1 src2 src3... RESULT <result>)```
+#### <a name="ucm_count_sources"></a>macro ```ucm_count_sources(src1 src2 src3... RESULT <result>)```
+<hr>
 
 Given a list of sources - returns the number of source files (no headers - only valid source extensions) in the result.
 
@@ -140,15 +146,18 @@ set(sources "a.cpp;b.cpp;h.hpp")
 ucm_count_sources(${sources} c.cpp d.cpp RESULT res) # would return 4 in res
 ```
 
-##### <a name="ucm_include_file_in_sources"></a>macro ```ucm_include_file_in_sources(src1 src2 src3... HEADER <header>)```
+#### <a name="ucm_include_file_in_sources"></a>macro ```ucm_include_file_in_sources(src1 src2 src3... HEADER <header>)```
+<hr>
 
 Includes the header in the source file with a compile flag (without modifying the file) either with ```-include "hdr.h"``` or with ```/FI"hdr.h"``` depending on the compiler.
 
-##### <a name="ucm_dir_list"></a>macro ```ucm_dir_list(<thedir> <result>)```
+#### <a name="ucm_dir_list"></a>macro ```ucm_dir_list(<thedir> <result>)```
+<hr>
 
 Returns a list of subdirectories for a given directory.
 
-##### <a name="ucm_remove_files"></a>macro ```ucm_remove_files(src1 src2 src3... FROM <sources>)```
+#### <a name="ucm_remove_files"></a>macro ```ucm_remove_files(src1 src2 src3... FROM <sources>)```
+<hr>
 
 Removes the given source files from the sources list - example:
 
@@ -157,7 +166,8 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_files(utils/deprecated.h FROM sources)
 ```
 
-##### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources>)```
+#### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources>)```
+<hr>
 
 Removes all source files from the given directories from the sources list - example:
 
@@ -166,7 +176,8 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_directories(utils/deprecated utils/experimental FROM sources)
 ```
 
-##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <EXECUTABLE|STATIC|SHARED|MODULE> SOURCES src1 src2 src3... [PCH_FILE <pch>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
+#### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <EXECUTABLE|STATIC|SHARED|MODULE> SOURCES src1 src2 src3... [PCH_FILE <pch>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
+<hr>
 
 A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target. For information about unity builds in general go to the cotire page. A unity-enabled target may get built up to 90% faster than a normal one.
 
