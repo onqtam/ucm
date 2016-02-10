@@ -217,36 +217,36 @@ endmacro()
 # ucm_remove_files
 # Removes source files from a list of sources (path is the relative path for it to be found)
 macro(ucm_remove_files)
-    cmake_parse_arguments(ARG "" "RESULT" "" ${ARGN})
+    cmake_parse_arguments(ARG "" "FROM" "" ${ARGN})
     
     if("${ARG_UNPARSED_ARGUMENTS}" STREQUAL "")
         message(FATAL_ERROR "Need to pass some relative files to ucm_remove_files()")
     endif()
-    if(${ARG_RESULT} STREQUAL "")
-        message(FATAL_ERROR "Need to pass RESULT and a variable name to ucm_remove_files()")
+    if(${ARG_FROM} STREQUAL "")
+        message(FATAL_ERROR "Need to pass FROM and a variable name to ucm_remove_files()")
     endif()
     
     foreach(cur_file ${ARG_UNPARSED_ARGUMENTS})
-        list(REMOVE_ITEM ${ARG_RESULT} ${cur_file})
+        list(REMOVE_ITEM ${ARG_FROM} ${cur_file})
     endforeach()
 endmacro()
 
 # ucm_remove_directories
 macro(ucm_remove_directories)
-    cmake_parse_arguments(ARG "" "RESULT" "" ${ARGN})
+    cmake_parse_arguments(ARG "" "FROM" "" ${ARGN})
     
     if("${ARG_UNPARSED_ARGUMENTS}" STREQUAL "")
         message(FATAL_ERROR "Need to pass some relative directories to ucm_remove_directories()")
     endif()
-    if(${ARG_RESULT} STREQUAL "")
-        message(FATAL_ERROR "Need to pass RESULT and a variable name to ucm_remove_directories()")
+    if(${ARG_FROM} STREQUAL "")
+        message(FATAL_ERROR "Need to pass FROM and a variable name to ucm_remove_directories()")
     endif()
     
     foreach(cur_dir ${ARG_UNPARSED_ARGUMENTS})
-        foreach(cur_file ${${ARG_RESULT}})
+        foreach(cur_file ${${ARG_FROM}})
             string(REGEX MATCH ${cur_dir} res ${cur_file})
             if(NOT "${res}" STREQUAL "")
-                list(REMOVE_ITEM ${ARG_RESULT} ${cur_file})
+                list(REMOVE_ITEM ${ARG_FROM} ${cur_file})
             endif()
         endforeach()
     endforeach()
@@ -267,20 +267,20 @@ endmacro()
 # ucm_add_files
 # Adds files to a list of sources
 macro(ucm_add_files)
-    cmake_parse_arguments(ARG "" "RESULT;TRIM_FILTER" "" ${ARGN})
+    cmake_parse_arguments(ARG "" "TO;FILTER_POP" "" ${ARGN})
     
     if("${ARG_UNPARSED_ARGUMENTS}" STREQUAL "")
         message(FATAL_ERROR "Need to pass some relative files to ucm_add_files()")
     endif()
-    if(${ARG_RESULT} STREQUAL "")
-        message(FATAL_ERROR "Need to pass RESULT and a variable name to ucm_add_files()")
+    if(${ARG_TO} STREQUAL "")
+        message(FATAL_ERROR "Need to pass TO and a variable name to ucm_add_files()")
     endif()
     
-    if("${ARG_TRIM_FILTER}" STREQUAL "")
-        set(ARG_TRIM_FILTER 0)
+    if("${ARG_FILTER_POP}" STREQUAL "")
+        set(ARG_FILTER_POP 0)
     endif()
     
-    ucm_add_files_impl(${ARG_RESULT} ${ARG_TRIM_FILTER} "${ARG_UNPARSED_ARGUMENTS}")
+    ucm_add_files_impl(${ARG_TO} ${ARG_FILTER_POP} "${ARG_UNPARSED_ARGUMENTS}")
 endmacro()
 
 # ucm_add_dir_impl
@@ -365,17 +365,17 @@ endmacro()
 # and generates filters according to their location (accepts relative paths only).
 # Also this macro trims X times the front word from the filter string for visual studio filters.
 macro(ucm_add_dirs)
-    cmake_parse_arguments(ARG "REC;" "RESULT;TRIM_FILTER" "" ${ARGN})
+    cmake_parse_arguments(ARG "REC;" "TO;FILTER_POP" "" ${ARGN})
     
-    if(${ARG_RESULT} STREQUAL "")
-        message(FATAL_ERROR "Need to pass RESULT and a variable name to ucm_add_dirs()")
+    if(${ARG_TO} STREQUAL "")
+        message(FATAL_ERROR "Need to pass TO and a variable name to ucm_add_dirs()")
     endif()
     
-    if("${ARG_TRIM_FILTER}" STREQUAL "")
-        set(ARG_TRIM_FILTER 0)
+    if("${ARG_FILTER_POP}" STREQUAL "")
+        set(ARG_FILTER_POP 0)
     endif()
     
-    ucm_add_dir_impl(${ARG_RESULT} ${ARG_REC} ${ARG_TRIM_FILTER} "${ARG_UNPARSED_ARGUMENTS}")
+    ucm_add_dir_impl(${ARG_TO} ${ARG_REC} ${ARG_FILTER_POP} "${ARG_UNPARSED_ARGUMENTS}")
 endmacro()
 
 # ucm_add_target
