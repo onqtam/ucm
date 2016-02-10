@@ -16,7 +16,6 @@ Build status
 Todo
 ----
 
-- test clang
 - test osx
 - finish the documentation
 - continue on https://github.com/sakra/cotire/issues/68
@@ -128,9 +127,7 @@ CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 
 ##### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(RESULT <result> dir1 dir2 dir3...)```
 
-##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <pch>] 
-
-[UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED <excluded_list>]])```
+##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <pch>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED <excluded_list>]])```
 
 
 

@@ -40,4 +40,4 @@ ucm_include_file_in_source("c.cc" "for_c.h")
 # needed because of this: https://github.com/sakra/cotire/issues/68
 ucm_include_file_in_source("c.cc" "pch.h")
 
-ucm_add_target(NAME ${PROJECT_NAME} TYPE EXECUTABLE UNITY CPP_PER_UNITY 3 PCH PCH_FILE "pch.h" SOURCES "${sources}" UNITY_EXCLUDED "c.cc" "separate/some2.cpp")
+ucm_add_target(NAME ${PROJECT_NAME} TYPE EXECUTABLE UNITY CPP_PER_UNITY 3 PCH_FILE "pch.h" SOURCES "${sources}" UNITY_EXCLUDED "c.cc" "separate/some2.cpp")
