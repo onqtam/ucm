@@ -62,7 +62,7 @@ CMAKE_C_FLAGS:  /DWIN32 /D_WINDOWS /W3 /W4
 CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 ```
 
-##### <a name="ucm_add_flags"></a>macro ```ucm_add_flags([C] [CPP] [CONFIG config] flag1 flag2 flag3...)```
+##### <a name="ucm_add_flags"></a>macro ```ucm_add_flags([C] [CXX] [CONFIG config] flag1 flag2 flag3...)```
 
 Append the flags to a different set depending on it's options - examples:
 
@@ -73,7 +73,7 @@ ucm_add_flags(CXX -O3) # will add to CMAKE_CXX_FLAGS
 ucm_add_flags(-O3 -Wall CONFIG Debug) # will add to CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
 ```
 
-##### <a name="ucm_set_flags"></a>macro ```ucm_set_flags([C] [CPP] [CONFIG <config>] flag1 flag2 flag3...)```
+##### <a name="ucm_set_flags"></a>macro ```ucm_set_flags([C] [CXX] [CONFIG <config>] flag1 flag2 flag3...)```
 
 Removes the old and sets the new flags to a different set depending on it's options - examples:
 
