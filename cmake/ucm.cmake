@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.12)
 
 include(CMakeParseArguments)
 
@@ -7,7 +7,7 @@ if(NOT COMMAND cotire)
     include(${CMAKE_CURRENT_LIST_DIR}/../cotire/CMake/cotire.cmake OPTIONAL)
 endif()
 
-if(COMMAND cotire AND "1.7.2" VERSION_LESS "${COTIRE_CMAKE_MODULE_VERSION}")
+if(COMMAND cotire AND "1.7.5" VERSION_LESS "${COTIRE_CMAKE_MODULE_VERSION}")
     set(ucm_with_cotire 1)
 else()
     set(ucm_with_cotire 0)
@@ -91,7 +91,12 @@ macro(ucm_set_runtime)
     if("${ARG_STATIC}")
         foreach(flags ${flags_configs})
             if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-                set(${flags} "${${flags}} -static-libstdc++ -static-libgcc")
+                if(NOT ${flags} MATCHES "-static-libstdc\\+\\+")
+                    set(${flags} "${${flags}} -static-libstdc++")
+                endif()
+                if(NOT ${flags} MATCHES "-static-libgcc")
+                    set(${flags} "${${flags}} -static-libgcc")
+                endif()
             elseif(MSVC)
                 if(${flags} MATCHES "/MD")
                     string(REGEX REPLACE "/MD" "/MT" ${flags} "${${flags}}")
@@ -136,48 +141,61 @@ endmacro()
 
 # ucm_count_sources
 # Counts the number of source files
-macro(ucm_count_sources sources result)
-    set(${result} 0)
-    foreach(SOURCE_FILE ${${sources}})
+macro(ucm_count_sources)
+    cmake_parse_arguments(ARG "" "RESULT" "" ${ARGN})
+    if(${ARG_RESULT} STREQUAL "")
+        message(FATAL_ERROR "Need to pass RESULT and a variable name to ucm_count_sources()")
+    endif()
+    
+    set(result 0)
+    foreach(SOURCE_FILE ${ARG_UNPARSED_ARGUMENTS})
         if("${SOURCE_FILE}" MATCHES \\.\(c|C|cc|cp|cpp|CPP|c\\+\\+|cxx|i|ii\)$)
-            math(EXPR ${result} "${${result}} + 1")
+            math(EXPR result "${result} + 1")
         endif()
     endforeach()
+    set(${ARG_RESULT} ${result})
 endmacro()
 
-# ucm_include_file_in_source
+# ucm_include_file_in_sources
 # Includes the file to the source with compiler flags
-macro(ucm_include_file_in_source src hdr)
-    if(${src} MATCHES \\.\(c|C|cc|cp|cpp|CPP|c\\+\\+|cxx\)$)
-        # get old flags
-        get_source_file_property(old_compile_flags ${src} COMPILE_FLAGS)
-        if(old_compile_flags STREQUAL "NOTFOUND")
-            set(old_compile_flags "")
-        endif()
-        
-        # update flags
-        if(MSVC)
-            set_source_files_properties(${src} PROPERTIES COMPILE_FLAGS
-                "${old_compile_flags} /FI\"${CMAKE_CURRENT_SOURCE_DIR}/${hdr}\"")
-        else()
-            set_source_files_properties(${src} PROPERTIES COMPILE_FLAGS
-                "${old_compile_flags} -include \"${CMAKE_CURRENT_SOURCE_DIR}/${hdr}\"")
-        endif()
+macro(ucm_include_file_in_sources)
+    cmake_parse_arguments(ARG "" "HEADER" "" ${ARGN})
+    if(${ARG_HEADER} STREQUAL "")
+        message(FATAL_ERROR "Need to pass HEADER and a header file to ucm_include_file_in_sources()")
     endif()
+    
+    foreach(src ${ARG_UNPARSED_ARGUMENTS})
+        if(${src} MATCHES \\.\(c|C|cc|cp|cpp|CPP|c\\+\\+|cxx\)$)
+            # get old flags
+            get_source_file_property(old_compile_flags ${src} COMPILE_FLAGS)
+            if(old_compile_flags STREQUAL "NOTFOUND")
+                set(old_compile_flags "")
+            endif()
+            
+            # update flags
+            if(MSVC)
+                set_source_files_properties(${src} PROPERTIES COMPILE_FLAGS
+                    "${old_compile_flags} /FI\"${CMAKE_CURRENT_SOURCE_DIR}/${ARG_HEADER}\"")
+            else()
+                set_source_files_properties(${src} PROPERTIES COMPILE_FLAGS
+                    "${old_compile_flags} -include \"${CMAKE_CURRENT_SOURCE_DIR}/${ARG_HEADER}\"")
+            endif()
+        endif()
+    endforeach()
 endmacro()
 
 # ucm_dir_list
 # Returns a list of subdirectories for a given directory
-macro(ucm_dir_list curdir retval)
-    file(GLOB sub-dir "${curdir}/*")
+macro(ucm_dir_list thedir result)
+    file(GLOB sub-dir "${thedir}/*")
     set(list_of_dirs "")
     foreach(dir ${sub-dir})
         if(IS_DIRECTORY ${dir})
             get_filename_component(DIRNAME ${dir} NAME)
-            set(list_of_dirs ${list_of_dirs} ${DIRNAME})
+            LIST(APPEND list_of_dirs ${DIRNAME})
         endif()
     endforeach()
-    set(${retval} ${list_of_dirs})
+    set(${result} ${list_of_dirs})
 endmacro()
 
 # ucm_trim_front_words
@@ -396,7 +414,7 @@ macro(ucm_add_target)
     
     # unity build only for targets with > 1 source file (otherwise there will be an additional unnecessary target)
     if(do_unity) # optimization
-        ucm_count_sources(ARG_SOURCES num_sources)
+        ucm_count_sources(${ARG_SOURCES} RESULT num_sources)
         if(${num_sources} STREQUAL 0 OR ${num_sources} STREQUAL 1)
             set(do_unity FALSE)
         endif()

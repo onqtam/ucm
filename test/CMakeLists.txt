@@ -7,15 +7,15 @@ include(../cmake/ucm.cmake)
 set(UCM_UNITY_BUILD ON)
 
 # testing setting the runtime back and forth and leaving it static
-ucm_set_runtime(STATIC)
-ucm_print_flags()
-message("")
-ucm_set_runtime(DYNAMIC)
-ucm_print_flags()
-message("")
-ucm_set_runtime(STATIC)
-ucm_print_flags()
-message("")
+#ucm_set_runtime(STATIC)
+#ucm_print_flags()
+#message("")
+#ucm_set_runtime(DYNAMIC)
+#ucm_print_flags()
+#message("")
+#ucm_set_runtime(STATIC)
+#ucm_print_flags()
+#message("")
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     ucm_add_flags(CXX -fvisibility=hidden)
@@ -36,9 +36,9 @@ ucm_remove_files("util/some_folder/source2.cpp" "util/some_folder/source3.cpp" R
 
 ucm_remove_directories("util/level1/level2" RESULT sources)
 
-ucm_include_file_in_source("c.cc" "for_c.h")
+ucm_include_file_in_sources("c.cc" HEADER "for_c.h")
 
-# needed because of this: https://github.com/sakra/cotire/issues/68
-ucm_include_file_in_source("c.cc" "pch.h")
+# needed because of this: https://github.com/sakra/cotire/issues/89
+ucm_include_file_in_sources("c.cc" HEADER "pch.h")
 
 ucm_add_target(NAME ${PROJECT_NAME} TYPE EXECUTABLE UNITY CPP_PER_UNITY 3 PCH_FILE "pch.h" SOURCES "${sources}" UNITY_EXCLUDED "c.cc" "separate/some2.cpp")
