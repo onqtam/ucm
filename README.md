@@ -35,7 +35,7 @@ Documentation
 
 Macro notation: ```myMacro(NAME <name> [FLAG])``` - ```NAME``` and a name after it are required and anything that is in [] is optional.
 
-Contribution of new macros is welcome.
+Contribution of new macros is welcome!
 
 ##### <a name="ucm_print_flags"></a>macro ```ucm_print_flags()```
 
@@ -149,7 +149,7 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_files(utils/deprecated.h FROM sources)
 ```
 
-##### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources>)```
+##### <a name="ucm_remove_directories"></a>**macro** ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources>)```
 
 Removes all source files from the given directories from the sources list - example:
 
@@ -158,7 +158,7 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_directories(utils/deprecated utils/experimental FROM sources)
 ```
 
-##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <pch>]            [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
+##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <pch>] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
 
 
 
