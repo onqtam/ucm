@@ -7,7 +7,7 @@ ucm - useful cmake macros
 
 [cotire](https://github.com/sakra/cotire) is an optional submodule for some macros and in order for them to work fully either do ```git submodule update --init --recursive``` after cloning or include cotire in your cmake files before ucm.
 
-Tested with MSVC/GCC/Clang (Intel icc should work too).
+Tested with MSVC/ICC/GCC/Clang.
 
 Contribution of new macros is welcome!
 
@@ -115,12 +115,7 @@ CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 
 Adds the sources to the sources variable and sets up filters for the solution explorer of Visual Studio (probably for XCode/CodeBlocks too).
 
-The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` we would have by default ```dir1/test``` as nested filters in the solution explorer. This can be controlled with ```FILTER_POP``` - 1 would result in only ```test``` as a filter and 2 would result in no filter for ```a.cpp``` - example:
-
-| COLUMN!               | COL 2! |
-|-----------------------|--------|
-| ```ucm_add_files(util/level1/bla_h1.h util/level1/bla_h2.h TO sources FILTER_POP 0)``` | ![0](test/doc_data/filter_0.png) |
-| ```ucm_add_files(util/level1/bla_h1.h util/level1/bla_h2.h TO sources FILTER_POP 1)``` | ![1](test/doc_data/filter_1.png) |
+The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` we would have by default ```dir1/test``` as nested filters in the solution explorer. This can be controlled with ```FILTER_POP``` - 1 would result in only ```test``` as a filter and 2 would result in no filter for ```a.cpp``` - see [ucm_add_dirs](#ucm_add_dirs) for a visual example.
 
 ##### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [RECURSIVE] [FILTER_POP <NUM>])```
 
@@ -128,7 +123,12 @@ Adds all sources (sources and headers with all valid c/c++ extensions) from the 
 
 Can be recursive with the ```RECURSIVE``` flag.
 
-Like ```ucm_add_files()``` filters for the solution explorer of IDEs can be controlled with ```FILTER_POP```.
+Like ```ucm_add_files()``` filters for the solution explorer of IDEs can be controlled with ```FILTER_POP``` - example:
+
+| FILTER_POP 0                                     | FILTER_POP 1                     |
+|--------------------------------------------------|----------------------------------|
+| ```ucm_add_dirs(util TO sources)```              | ![0](test/doc_data/filter_0.png) |
+| ```ucm_add_dirs(util TO sources FILTER_POP 1)``` | ![1](test/doc_data/filter_1.png) |
 
 ##### <a name="ucm_count_sources"></a>macro ```ucm_count_sources(src1 src2 src3... RESULT <result>)```
 
@@ -167,12 +167,17 @@ ucm_remove_directories(utils/deprecated utils/experimental FROM sources)
 
 ##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <header_file>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
 
-A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target.
+A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target. For information about unity builds in general go to the cotire page.
 
-cotire is a submodule of the repository so make sure
+How a unity target created with ```ucm_add_target()``` looks like:
 
+```CMake
+ucm_add_target(NAME example TYPE EXECUTABLE SOURCES "${sources}" UNITY UNITY_EXCLUDED "separate/some2.cpp")
+```
 
+This looks like this in the IDE when the ```UCM_UNITY_BUILD``` ucm option is set to ```ON```.
 
+![1](test/doc_data/unity.png)
 
 
 
