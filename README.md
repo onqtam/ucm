@@ -5,7 +5,7 @@ ucm - useful cmake macros
 [![Version](https://badge.fury.io/gh/onqtam%2Fucm.svg)](https://github.com/onqtam/ucm/releases)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-[cotire](https://github.com/sakra/cotire) is an optional submodule for some macros and in order for them to work fully either do ```git submodule update --init --recursive``` after cloning or include cotire in your cmake files before ucm.
+[cotire](https://github.com/sakra/cotire) is an optional submodule for some macros and in order for them to fully work either do ```git submodule update --init``` after cloning or include cotire in your cmake files before ucm.
 
 Tested with MSVC/ICC/GCC/Clang.
 
@@ -125,7 +125,7 @@ Can be recursive with the ```RECURSIVE``` flag.
 
 Like ```ucm_add_files()``` filters for the solution explorer of IDEs can be controlled with ```FILTER_POP``` - example:
 
-| FILTER_POP 0                                     | FILTER_POP 1                     |
+| CMake code                                       | result                           |
 |--------------------------------------------------|----------------------------------|
 | ```ucm_add_dirs(util TO sources)```              | ![0](test/doc_data/filter_0.png) |
 | ```ucm_add_dirs(util TO sources FILTER_POP 1)``` | ![1](test/doc_data/filter_1.png) |
@@ -165,17 +165,33 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_directories(utils/deprecated utils/experimental FROM sources)
 ```
 
-##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <type> SOURCES src1 src2 src3... [PCH_FILE <header_file>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
+##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <EXECUTABLE|STATIC|SHARED|MODULE> SOURCES src1 src2 src3... [PCH_FILE <pch>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
 
-A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target. For information about unity builds in general go to the cotire page.
-
-How a unity target created with ```ucm_add_target()``` looks like:
+A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of a precompiled header and/or making a unity build of the target. For information about unity builds in general go to the cotire page. A unity-enabled target may build up to 90% faster than a normal one.
 
 ```CMake
 ucm_add_target(NAME example TYPE EXECUTABLE SOURCES "${sources}" UNITY UNITY_EXCLUDED "separate/some2.cpp")
 ```
 
-This looks like this in the IDE when the ```UCM_UNITY_BUILD``` ucm option is set to ```ON```.
+When the ```UCM_UNITY_BUILD``` ucm option is set to ```ON``` (```OFF``` by default) a target registered like in the example above will actually result in 2 targets added - the unity target with ```example``` as a name (included in the build by default) and the original target with ```example_ORIGINAL``` as a name (excluded from the build by default). This allows the user to browse and modify the sources in the original target properly within the IDE.
+
+When new sources are added to the original target the unity target will be updated too by cotire.
+
+Targets can be excluded from unity builds by adding them in the ```UCM_UNITY_BUILD_EXCLUDE_TARGETS``` list when invoking cmake (so if a target becomes problematic in a unity build or if you want to iterate fast on a particular target and want to compile its sources separately).
+
+To explicitly say how many source files should go into a unity source use CPP_PER_UNITY (default is 100). Another option is to pass not a number but a "-jX" after CPP_PER_UNITY and that would mean to divide the sources into X unity sources.
+
+UNITY_EXCLUDED - list of files from the target that should be excluded from unify-ing (will be used normally by themselves).
+
+PCH_FILE - a header file that will be precompiled and prefixed to all sources (they won't even need to explicitly #include it).
+
+Unity examples - given 100 .cpp files in the target:
+
+- "CPP_PER_UNITY 5" would mean 20 .cxx unity files including 5 of the original .cpp files each
+- "CPP_PER_UNITY 10" would mean 10 .cxx unity files including 10 of the original .cpp files each
+- "CPP_PER_UNITY -j8" would mean 8 .cxx unity files dividing the original 100 among them
+
+How it looks in the IDE:
 
 ![1](test/doc_data/unity.png)
 
