@@ -31,11 +31,9 @@ ucm_add_dirs("" RESULT sources)
 ucm_add_files("separate/some1.cpp" "separate/some2.cpp" RESULT sources)
 ucm_add_files("separate/some3.cpp" RESULT sources TRIM_FILTER 1)
 ucm_add_dirs("util" RESULT sources REC TRIM_FILTER 1)
-message("BEFOOOORE")
-message("${sources}")
+
 ucm_remove_files("util/some_folder/source2.cpp" "util/some_folder/source3.cpp" RESULT sources)
-message("BEFOOOORE 2")
-message("${sources}")
+
 ucm_remove_directories("util/level1/level2" RESULT sources)
 
 ucm_include_file_in_source("c.cc" "for_c.h")

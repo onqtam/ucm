@@ -281,8 +281,9 @@ macro(ucm_add_dir_impl result rec trim dirs_in)
         # since unix is case sensitive - add these valid extensions too
         # we don't use "UNIX" but instead "CMAKE_HOST_UNIX" because we might be cross
         # compiling (for example emscripten) under windows and UNIX may be set to 1
+        # Also OSX is case insensitive like windows...
         set(additional_file_extensions "")
-        if(CMAKE_HOST_UNIX)
+        if(CMAKE_HOST_UNIX AND NOT APPLE)
             set(additional_file_extensions 
                 "${cur_dir}*.CPP"
                 "${cur_dir}*.C"

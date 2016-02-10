@@ -20,5 +20,3 @@ script:
   - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON test
   - cat compile_commands.json
   - make
-after_failure:
-  - cat CMakeFiles/example.dir/cotire/example_ORIGINAL_CXX_unity_3_5.cxx
