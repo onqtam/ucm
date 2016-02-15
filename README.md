@@ -12,7 +12,7 @@ ucm is a collection of cmake macros that help with:
 
 Tested with MSVC/GCC/Clang.
 
-[cotire](https://github.com/sakra/cotire) is an optional submodule for the [ucm_add_target()](#ucm_add_target) macro and in order for it to fully work either do ```git submodule update --init``` after cloning or include cotire in your cmake files before ucm.
+[cotire](https://github.com/sakra/cotire) is an optional submodule for the [ucm_add_target()](#ucm_add_target) macro either do ```git submodule update --init``` after cloning or include cotire in your cmake files before ucm.
 
 [![Language](https://img.shields.io/badge/language-CMake-blue.svg)](https://en.wikipedia.org/wiki/CMake)
 [![Version](https://badge.fury.io/gh/onqtam%2Fucm.svg)](https://github.com/onqtam/ucm/releases)
@@ -44,7 +44,7 @@ Documentation
 - [ucm_remove_directories](#ucm_remove_directories)
 - [ucm_add_target](#ucm_add_target)
 
-Macro notation: ```myMacro(NAME <name> [FLAG])``` - ```NAME``` and a name after it are required and anything that is in [] is optional.
+Macro notation: ```myMacro(NAME <name> [FLAG])``` - ```NAME``` and a name after it are required and FLAG is optional (because in brackets).
 
 ##### <a name="ucm_print_flags"></a>macro ```ucm_print_flags()```
 
@@ -175,7 +175,7 @@ ucm_add_dirs(utils REC TO sources)
 ucm_remove_files(utils/deprecated.h FROM sources)
 ```
 
-##### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources> MATCHES pttrn1 pttrn2)```
+##### <a name="ucm_remove_directories"></a>macro ```ucm_remove_directories(dir1 dir2 dir3... FROM <sources> [MATCHES pttrn1 pttrn2])```
 
 Removes all source files from the given directories from the sources list (recursively) - example:
 
@@ -190,8 +190,6 @@ Patterns can also be given like this:
 ```CMake
 ucm_remove_directories(utils FROM sources MATCHES win32)
 ```
-
-MATCHES
 
 ##### <a name="ucm_add_target"></a>macro ```ucm_add_target(NAME <name> TYPE <EXECUTABLE|STATIC|SHARED|MODULE> SOURCES src1 src2 src3... [PCH_FILE <pch>] [UNITY [CPP_PER_UNITY <num>] [UNITY_EXCLUDED excl_src1 excl_src2 ...]])```
 
@@ -249,14 +247,14 @@ A unity build of a project is when all it's sources are included in a master uni
 
 A unity build doesn't have to be in one unity source - for example a 100 .cpp target might be built in 10 unity files each including 10 of the original source files. Some sources can be built normally - separate from the unity file[s] if they are problematic. Build errors can be also combated by changing the order of the source files.
 
-### Pros
+#### Pros
 
-- The build is substantially faster - currently with almost all projects in cgrepo that have more than 1 source file built as a unity the build takes around 53% of the original build time (this is for Maya 2016 MSVC/INTEL in Release and in my opinion it can be reduced to below 50% or 40% easily). If we had more modular code and less 10k LOC source files the gains would be a lot bigger.
-- Unity builds are equivalent to LTO (link-time optimization or WPO/LTCG - which increases the build time quite a lot and we currently don't use it - not even for stable/production builds!!!).
-- ODR (One Definition Rule) violations get caught - see this
-- Unity builds force us to think about code hygiene - LESS COPY/PASTE!!!, include guards in headers, no statics defined in headers, no non-inline function definitions in headers.
+- The build is substantially faster - depending on the modularity of the code (less 10kloc source files) the gains can be huge - up to 90% faster!
+- Unity builds are equivalent to LTO (link-time optimization or WPO/LTCG which make the build ultra slow) but faster even than the normal build!
+- ODR (One Definition Rule) violations get caught - see [this](http://stackoverflow.com/questions/31722473)
+- Unity builds force us to think about code hygiene - include guards in headers, no statics defined in headers, no non-inline function definitions in headers and most importantly LESS COPY/PASTE!!!
 
-### Cons
+#### Cons
 
 - The cmake configuration takes longer - a lot more cmake macros are executed - but this is negligible.
 - Something that builds fine as a normal build might not as a unity - for example static variables (or just in anonymous namespaces) with the same names in 2 different source files, type redefinitions or some macro shenanigans. using namespace now becomes problematic even in normal source files.
@@ -279,4 +277,3 @@ int func(int arg) { return arg * 2; }
 ```
 
 In the above example if a.cpp ends up after b.cpp in the same unity file the result of main() will be 84 instead of 42. But this has a very small chance of happening.
-- For static libs all .obj files will end up in one big .obj file and more link dependencies might be dragged to users of the static library.
