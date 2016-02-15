@@ -7,7 +7,7 @@ ucm is a collection of cmake macros that help with:
 - collecting source files with grouping in IDEs that mimics the filesystem structure
 - easy removing source files from already collected ones
 - adding a precompiled header for targets
-- [unity builds](#Unity-builds) of targets
+- [unity builds](#unity-builds) of targets
 - others... contribution is welcome!
 
 Tested with MSVC/GCC/Clang.
@@ -195,7 +195,7 @@ ucm_remove_directories(utils FROM sources MATCHES win32)
 
 A wrapper of ```add_library()``` and ```add_executable()``` calls. Uses [cotire](https://github.com/sakra/cotire) for platform/compiler independent usage of precompiled headers and/or making a unity build of the target.
 
-For information about unity builds in general go to the [bottom](#Unity-builds).
+For information about unity builds in general go to the [bottom](#unity-builds).
 
 ```CMake
 ucm_add_target(NAME example TYPE EXECUTABLE SOURCES "${sources}" PCH_FILE precompiled.h)
