@@ -5,6 +5,8 @@ notifications:
   email:
     on_success: change
     on_failure: change
+git:
+  depth: 5
 compiler:
   - gcc
   - clang
@@ -16,7 +18,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew outdated cmake || brew upgrade cmake ; fi
   - git submodule update --init --recursive
 script:
-  - cmake --version
   - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON test
-  - cat compile_commands.json
   - make
+after_script:
+  - cat compile_commands.json

@@ -34,7 +34,7 @@ ucm_add_dirs("util" TO sources RECURSIVE FILTER_POP 1)
 
 ucm_remove_files("util/some_folder/source2.cpp" "util/some_folder/source3.cpp" FROM sources)
 
-ucm_remove_directories("util/level1/level2" FROM sources)
+ucm_remove_directories("util/level1/level2" FROM sources MATCHES "deprecated")
 
 ucm_include_file_in_sources("c.cc" HEADER "for_c.h")
 
