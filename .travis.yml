@@ -13,7 +13,8 @@ os:
   - linux
   - osx
 before_install:
-  # Install a recent CMake
+  - git submodule update --init --recursive
+install:
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
@@ -23,7 +24,6 @@ before_install:
       brew update
       brew outdated cmake || brew upgrade cmake
     fi
-  - git submodule update --init --recursive
 script:
   - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON test
   - make
