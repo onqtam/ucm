@@ -15,15 +15,21 @@ os:
 before_install:
   - git submodule update --init --recursive
 install:
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+
+  # setup newer cmake
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
-      mkdir cmake3 && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake3
-      export PATH=${DEPS_DIR}/cmake3/bin:${PATH}
+      mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+      export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     else
       brew update
       brew outdated cmake || brew upgrade cmake
     fi
+
+  - cd ${TRAVIS_BUILD_DIR}
 script:
   - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON test
   - make
