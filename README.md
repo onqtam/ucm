@@ -3,7 +3,7 @@ ucm - useful cmake macros
 
 ucm is a collection of cmake macros that help with:
 
-- managing compiler flags
+- managing compiler/linker flags
 - collecting source files with grouping in IDEs that mimics the filesystem structure
 - easy removing source files from already collected ones
 - adding a precompiled header for targets
@@ -15,7 +15,6 @@ Tested with MSVC/GCC/Clang.
 [cotire](https://github.com/sakra/cotire) is an optional submodule for the [ucm_add_target()](#ucm_add_target) macro either do ```git submodule update --init``` after cloning or include cotire in your cmake files before ucm.
 
 [![Language](https://img.shields.io/badge/language-CMake-blue.svg)](https://en.wikipedia.org/wiki/CMake)
-[![Version](https://badge.fury.io/gh/onqtam%2Fucm.svg)](https://github.com/onqtam/ucm/releases)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 Build status
@@ -34,6 +33,8 @@ Documentation
 - [ucm_print_flags](#ucm_print_flags)
 - [ucm_add_flags](#ucm_add_flags)
 - [ucm_set_flags](#ucm_set_flags)
+- [ucm_add_linker_flags](#ucm_add_linker_flags)
+- [ucm_set_linker_flags](#ucm_set_linker_flags)
 - [ucm_set_runtime](#ucm_set_runtime)
 - [ucm_add_files](#ucm_add_files)
 - [ucm_add_dirs](#ucm_add_dirs)
@@ -88,6 +89,24 @@ ucm_set_flags(CXX) # will clear CMAKE_CXX_FLAGS
 ucm_set_flags() # will clear both CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 ucm_set_flags(CXX -O3) # will set CMAKE_CXX_FLAGS
 ucm_set_flags(-O3 -Wall CONFIG Debug) # will set CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
+```
+
+##### <a name="ucm_add_linker_flags"></a>macro ```ucm_add_linker_flags([EXE] [MODULE] [SHARED] [STATIC] [CONFIG <config>] flag1 flag2 flag3...)```
+
+Append the flags to a different set depending on it's options - examples:
+
+```cmake
+ucm_add_linker_flags(/NXCOMPAT) # will add to CMAKE_<TYPE>_LINKER_FLAGS (where TYPE is all 4 - exe/module/shared/static)
+ucm_add_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will add to CMAKE_EXE_LINKER_FLAGS_RELEASE only
+```
+
+##### <a name="ucm_set_linker_flags"></a>macro ```ucm_set_linker_flags([EXE] [MODULE] [SHARED] [STATIC] [CONFIG <config>] flag1 flag2 flag3...)```
+
+Removes the old and sets the new flags to a different set depending on it's options - examples:
+
+```cmake
+ucm_set_linker_flags(/NXCOMPAT) # will clear all CMAKE_<TYPE>_LINKER_FLAGS (where TYPE is all 4 - exe/module/shared/static) and set the flag to all
+ucm_set_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will set CMAKE_EXE_LINKER_FLAGS_RELEASE only
 ```
 
 ##### <a name="ucm_set_runtime"></a>macro ```ucm_set_runtime([STATIC][DYNAMIC])```
