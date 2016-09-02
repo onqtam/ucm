@@ -440,7 +440,7 @@ macro(ucm_add_target)
     
 	# inform the developer that the current target might benefit from a unity build
 	if(NOT ARG_UNITY AND ${UCM_UNITY_BUILD})
-		cgr_count_sources(ARG_SOURCES num_sources)
+		ucm_count_sources(${ARG_SOURCES} RESULT num_sources)
 		if(${num_sources} GREATER 1)
 			message(AUTHOR_WARNING "Target '${ARG_NAME}' may benefit from a unity build.\nIt has ${num_sources} sources - enable with UNITY flag")
 		endif()
