@@ -96,7 +96,7 @@ ucm_set_flags(-O3 -Wall CONFIG Debug) # will set CMAKE_C_FLAGS_DEBUG and CMAKE_C
 Append the flags to a different set depending on it's options - examples:
 
 ```cmake
-ucm_add_linker_flags(/NXCOMPAT) # will add to CMAKE_<TYPE>_LINKER_FLAGS (where TYPE is all 4 - exe/module/shared/static)
+ucm_add_linker_flags(/NXCOMPAT) # will add to CMAKE_<TYPE>_LINKER_FLAGS (TYPE is all 4 - exe/module/shared/static)
 ucm_add_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will add to CMAKE_EXE_LINKER_FLAGS_RELEASE only
 ```
 
@@ -105,7 +105,7 @@ ucm_add_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will add to CMAKE_EXE_LI
 Removes the old and sets the new flags to a different set depending on it's options - examples:
 
 ```cmake
-ucm_set_linker_flags(/NXCOMPAT) # will clear all CMAKE_<TYPE>_LINKER_FLAGS (where TYPE is all 4 - exe/module/shared/static) and set the flag to all
+ucm_set_linker_flags(/NXCOMPAT) # will clear all CMAKE_<TYPE>_LINKER_FLAGS
 ucm_set_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will set CMAKE_EXE_LINKER_FLAGS_RELEASE only
 ```
 
