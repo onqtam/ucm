@@ -1,6 +1,13 @@
 # Change Log
 
-## [1.1.0](https://github.com/onqtam/ucm/tree/1.1.0) (2016-02-16)
+## [1.1.1](https://github.com/onqtam/ucm/tree/1.1.1) (2016-09-02)
+[Full Changelog](https://github.com/onqtam/ucm/compare/1.1.0...1.1.1)
+
+**Closed issues:**
+
+- typo in ucm\_add\_target - calling cgr\_count\_sources which doesn't exist [\#7](https://github.com/onqtam/ucm/issues/7)
+
+## [1.1.0](https://github.com/onqtam/ucm/tree/1.1.0) (2016-02-15)
 [Full Changelog](https://github.com/onqtam/ucm/compare/1.0.0...1.1.0)
 
 **Implemented enhancements:**
