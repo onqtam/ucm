@@ -269,7 +269,6 @@ A unity build doesn't have to be in one unity source - for example a 100 .cpp ta
 
 #### Cons
 
-- The cmake configuration takes longer - a lot more cmake macros are executed - but this is negligible.
 - Something that builds fine as a normal build might not as a unity - for example static variables (or just in anonymous namespaces) with the same names in 2 different source files, type redefinitions or some macro shenanigans. using namespace now becomes problematic even in normal source files.
 - Preprocessor - it is outside of the type system and something may compile but might mean something different in a unity build - for example a macro with the same name (and number of arguments) as an identifier or macro redefinition.
 - Non-explicit single argument constructors (or with N arguments and N-1 defaults) - there might be compilation errors or worse - the wrong overload might be chosen (miscompilation):
