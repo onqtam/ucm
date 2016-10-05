@@ -109,7 +109,7 @@ ucm_set_linker_flags(/NXCOMPAT) # will clear all CMAKE_<TYPE>_LINKER_FLAGS
 ucm_set_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will set CMAKE_EXE_LINKER_FLAGS_RELEASE only
 ```
 
-##### <a name="ucm_set_runtime"></a>macro ```ucm_set_runtime([STATIC][DYNAMIC])```
+##### <a name="ucm_set_runtime"></a>macro ```ucm_set_runtime([STATIC] [DYNAMIC])```
 
 Sets the runtime to static/dynamic - for example with Visual Studio as a generator:
 
