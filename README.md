@@ -16,14 +16,8 @@ Tested with MSVC/GCC/Clang.
 
 [![Language](https://img.shields.io/badge/language-CMake-blue.svg)](https://en.wikipedia.org/wiki/CMake)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
-
-Build status
-------------
-
-| Service               | Status |
-|-----------------------|--------|
-| Travis-CI (Linux/OSX) | [![Linux/OSX Status](https://travis-ci.org/onqtam/ucm.svg?branch=master)](https://travis-ci.org/onqtam/ucm)|
-| Appveyor (Windows)    | [![Windows Status](https://ci.appveyor.com/api/projects/status/m80f32y206l9tb52?svg=true)](https://ci.appveyor.com/project/onqtam/ucm)|
+[![Linux/OSX Status](https://travis-ci.org/onqtam/ucm.svg?branch=master)](https://travis-ci.org/onqtam/ucm)
+[![Windows Status](https://ci.appveyor.com/api/projects/status/m80f32y206l9tb52?svg=true)](https://ci.appveyor.com/project/onqtam/ucm)
 
 Documentation
 -------------
