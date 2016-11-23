@@ -389,7 +389,7 @@ macro(ucm_add_files)
 endmacro()
 
 # ucm_add_dir_impl
-macro(ucm_add_dir_impl result rec trim dirs_in)
+macro(ucm_add_dir_impl result rec trim dirs_in additional_ext)
     set(dirs "${dirs_in}")
     
     # handle the "" and "." cases
@@ -418,6 +418,10 @@ macro(ucm_add_dir_impl result rec trim dirs_in)
                 "${cur_dir}*.HPP"
                 )
         endif()
+        
+        foreach(ext ${additional_ext})
+            list(APPEND additional_file_extensions "${cur_dir}*.${ext}")
+        endforeach()
         
         # find all sources and set them as result
         FILE(GLOB found_sources RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -459,7 +463,7 @@ macro(ucm_add_dir_impl result rec trim dirs_in)
         foreach(cur_dir ${dirs})
             ucm_dir_list("${cur_dir}" subdirs)
             foreach(subdir ${subdirs})
-                ucm_add_dir_impl(${result} ${rec} ${trim} "${cur_dir}/${subdir}")
+                ucm_add_dir_impl(${result} ${rec} ${trim} "${cur_dir}/${subdir}" "${additional_ext}")
             endforeach()
         endforeach()
     endif()
@@ -470,7 +474,7 @@ endmacro()
 # and generates filters according to their location (accepts relative paths only).
 # Also this macro trims X times the front word from the filter string for visual studio filters.
 macro(ucm_add_dirs)
-    cmake_parse_arguments(ARG "RECURSIVE" "TO;FILTER_POP" "" ${ARGN})
+    cmake_parse_arguments(ARG "RECURSIVE" "TO;FILTER_POP" "ADDITIONAL_EXT" ${ARGN})
     
     if(${ARG_TO} STREQUAL "")
         message(FATAL_ERROR "Need to pass TO and a variable name to ucm_add_dirs()")
@@ -480,7 +484,7 @@ macro(ucm_add_dirs)
         set(ARG_FILTER_POP 0)
     endif()
     
-    ucm_add_dir_impl(${ARG_TO} ${ARG_RECURSIVE} ${ARG_FILTER_POP} "${ARG_UNPARSED_ARGUMENTS}")
+    ucm_add_dir_impl(${ARG_TO} ${ARG_RECURSIVE} ${ARG_FILTER_POP} "${ARG_UNPARSED_ARGUMENTS}" "${ARG_ADDITIONAL_EXT}")
 endmacro()
 
 # ucm_add_target

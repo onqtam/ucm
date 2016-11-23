@@ -141,7 +141,7 @@ The filters will mimic the filesystem - if we have given ```dir1/test/a.cpp``` w
 ucm_add_files("dir/some1.cpp" "dir/some1.h" TO sources)
 ```
 
-##### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [RECURSIVE] [FILTER_POP <num>])```
+##### <a name="ucm_add_dirs"></a>macro ```ucm_add_dirs(dir1 dir2 dir3... TO <sources> [RECURSIVE] [FILTER_POP <num>] [ADDITIONAL_EXT ext1 ext2 ...])```
 
 Adds all sources (sources and headers with all valid c/c++ extensions) from the directories given.
 
@@ -153,6 +153,8 @@ Like ```ucm_add_files()``` filters for the solution explorer of IDEs can be cont
 |--------------------------------------------------|----------------------------------|
 | ```ucm_add_dirs(util TO sources)```              | ![0](test/doc_data/filter_0.png) |
 | ```ucm_add_dirs(util TO sources FILTER_POP 1)``` | ![1](test/doc_data/filter_1.png) |
+
+Additional extensions for collection can be added with the ```ADDITIONAL_EXT``` list.
 
 ##### <a name="ucm_count_sources"></a>macro ```ucm_count_sources(src1 src2 src3... RESULT <result>)```
 
