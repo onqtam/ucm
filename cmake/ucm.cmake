@@ -581,6 +581,7 @@ macro(ucm_add_target)
         
         # this is the library call that does the magic
         cotire(${orig_target})
+        set_target_properties(clean_cotire PROPERTIES FOLDER "CMakePredefinedTargets")
         
         # disable the original target and enable the unity one
         get_target_property(unity_target_name ${orig_target} COTIRE_UNITY_TARGET_NAME)
@@ -592,15 +593,15 @@ macro(ucm_add_target)
         if(UCM_NO_COTIRE_FOLDER)
             # reset the folder property so all unity targets dont end up in a single folder in the solution explorer of VS
             set_target_properties(${unity_target_name} PROPERTIES FOLDER "")
-            set_target_properties(all_unity PROPERTIES FOLDER "")
-            set_target_properties(clean_cotire PROPERTIES FOLDER "")
         endif()
+        set_target_properties(all_unity PROPERTIES FOLDER "CMakePredefinedTargets")
     elseif(NOT "${ARG_PCH_FILE}" STREQUAL "")
         set(wanted_cotire TRUE)
         if(ucm_with_cotire)
             set_target_properties(${orig_target} PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
             set_target_properties(${orig_target} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "${ARG_PCH_FILE}")
             cotire(${orig_target})
+            set_target_properties(clean_cotire PROPERTIES FOLDER "CMakePredefinedTargets")
         endif()
     endif()
     
