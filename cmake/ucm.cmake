@@ -31,36 +31,44 @@ option(UCM_NO_COTIRE_FOLDER     "Do not use a cotire folder in the solution expl
 # ucm_add_flags
 # Adds compiler flags to CMAKE_<LANG>_FLAGS or to a specific config
 macro(ucm_add_flags)
-    cmake_parse_arguments(ARG "C;CXX;CLEAR_OLD" "CONFIG" "" ${ARGN})
-    
-    # determine to which flags to add
-    set(CXX_FLAGS CMAKE_CXX_FLAGS)
-    set(C_FLAGS CMAKE_C_FLAGS)
-    if(NOT "${ARG_CONFIG}" STREQUAL "")
-        string(TOUPPER ${ARG_CONFIG} ARG_CONFIG)
-        set(CXX_FLAGS CMAKE_CXX_FLAGS_${ARG_CONFIG})
-        set(C_FLAGS CMAKE_C_FLAGS_${ARG_CONFIG})
+    cmake_parse_arguments(ARG "C;CXX;CLEAR_OLD" "" "CONFIG" ${ARGN})
+
+    if(NOT ARG_CONFIG)
+        set(ARG_CONFIG " ")
     endif()
-    
-    # clear the old flags
-    if(${ARG_CLEAR_OLD})
-        if("${ARG_CXX}" OR NOT "${ARG_C}")
-            set(${CXX_FLAGS} "")
+
+    foreach(CONFIG ${ARG_CONFIG})
+        # determine to which flags to add
+        if(NOT ${CONFIG} STREQUAL " ")
+            string(TOUPPER ${CONFIG} CONFIG)
+            set(CXX_FLAGS CMAKE_CXX_FLAGS_${CONFIG})
+            set(C_FLAGS CMAKE_C_FLAGS_${CONFIG})
+        else()
+            set(CXX_FLAGS CMAKE_CXX_FLAGS)
+            set(C_FLAGS CMAKE_C_FLAGS)
         endif()
-        if("${ARG_C}" OR NOT "${ARG_CXX}")
-            set(${C_FLAGS} "")
+
+        # clear the old flags
+        if(${ARG_CLEAR_OLD})
+            if("${ARG_CXX}" OR NOT "${ARG_C}")
+                set(${CXX_FLAGS} "")
+            endif()
+            if("${ARG_C}" OR NOT "${ARG_CXX}")
+                set(${C_FLAGS} "")
+            endif()
         endif()
-    endif()
-    
-    # add all the passed flags
-    foreach(flag ${ARG_UNPARSED_ARGUMENTS})
-        if("${ARG_CXX}" OR NOT "${ARG_C}")
-            set(${CXX_FLAGS} "${${CXX_FLAGS}} ${flag}")
-        endif()
-        if("${ARG_C}" OR NOT "${ARG_CXX}")
-            set(${C_FLAGS} "${${C_FLAGS}} ${flag}")
-        endif()
+
+        # add all the passed flags
+        foreach(flag ${ARG_UNPARSED_ARGUMENTS})
+            if("${ARG_CXX}" OR NOT "${ARG_C}")
+                set(${CXX_FLAGS} "${${CXX_FLAGS}} ${flag}")
+            endif()
+            if("${ARG_C}" OR NOT "${ARG_CXX}")
+                set(${C_FLAGS} "${${C_FLAGS}} ${flag}")
+            endif()
+        endforeach()
     endforeach()
+
 endmacro()
 
 # ucm_set_flags
