@@ -193,6 +193,10 @@ endmacro()
 # Sets the runtime (static/dynamic) for msvc/gcc
 macro(ucm_set_runtime)
     cmake_parse_arguments(ARG "STATIC;DYNAMIC" "" "" ${ARGN})
+
+    if(ARG_UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "unrecognized arguments: ${ARG_UNPARSED_ARGUMENTS}")
+    endif()
     
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" STREQUAL "")
         message(AUTHOR_WARNING "ucm_set_runtime() does not support clang yet!")
