@@ -72,6 +72,7 @@ ucm_add_flags(-O3 -Wextra) # will add to CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 ucm_add_flags(C -O3) # will add to CMAKE_C_FLAGS
 ucm_add_flags(CXX -O3) # will add to CMAKE_CXX_FLAGS
 ucm_add_flags(-O3 -Wall CONFIG Debug) # will add to CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
+ucm_add_flags(C -Wall CONFIG Debug Release) # will add to CMAKE_C_FLAGS_DEBUG and CMAKE_C_FLAGS_RELEASE
 ```
 
 ##### <a name="ucm_set_flags"></a>macro ```ucm_set_flags([C] [CXX] [CONFIG <config>] flag1 flag2 flag3...)```
@@ -92,6 +93,7 @@ Append the flags to a different set depending on it's options - examples:
 ```cmake
 ucm_add_linker_flags(/NXCOMPAT) # will add to CMAKE_<TYPE>_LINKER_FLAGS (TYPE is all 4 - exe/module/shared/static)
 ucm_add_linker_flags(EXE /DYNAMICBASE CONFIG Release) # will add to CMAKE_EXE_LINKER_FLAGS_RELEASE only
+ucm_add_flags(EXE /DYNAMICBASE CONFIG Debug Release) # will add to CMAKE_EXE_LINKER_FLAGS_DEBUG and CMAKE_EXE_LINKER_FLAGS_RELEASE
 ```
 
 ##### <a name="ucm_set_linker_flags"></a>macro ```ucm_set_linker_flags([EXE] [MODULE] [SHARED] [STATIC] [CONFIG <config>] flag1 flag2 flag3...)```
