@@ -32,7 +32,7 @@ option(UCM_NO_COTIRE_FOLDER     "Do not use a cotire folder in the solution expl
 # Adds compiler flags to CMAKE_<LANG>_FLAGS or to a specific config
 macro(ucm_add_flags)
     cmake_parse_arguments(ARG "C;CXX;CLEAR_OLD" "CONFIG" "" ${ARGN})
-    
+
     # determine to which flags to add
     set(CXX_FLAGS CMAKE_CXX_FLAGS)
     set(C_FLAGS CMAKE_C_FLAGS)
@@ -73,7 +73,7 @@ endmacro()
 # Adds linker flags to CMAKE_<TYPE>_LINKER_FLAGS or to a specific config
 macro(ucm_add_linker_flags)
     cmake_parse_arguments(ARG "CLEAR_OLD;EXE;MODULE;SHARED;STATIC" "CONFIG" "" ${ARGN})
-    
+
     string(TOUPPER "${ARG_CONFIG}" ARG_CONFIG)
     
     if(NOT ${ARG_EXE} AND NOT ${ARG_MODULE} AND NOT ${ARG_SHARED} AND NOT ${ARG_STATIC})
@@ -179,6 +179,10 @@ endmacro()
 # Sets the runtime (static/dynamic) for msvc/gcc
 macro(ucm_set_runtime)
     cmake_parse_arguments(ARG "STATIC;DYNAMIC" "" "" ${ARGN})
+
+    if(ARG_UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "unrecognized arguments: ${ARG_UNPARSED_ARGUMENTS}")
+    endif()
     
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" STREQUAL "")
         message(AUTHOR_WARNING "ucm_set_runtime() does not support clang yet!")
