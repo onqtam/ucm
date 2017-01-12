@@ -6,7 +6,7 @@ include(../cmake/ucm.cmake)
 
 set(UCM_UNITY_BUILD ON)
 
-#set(CMAKE_CONFIGURATION_TYPES Debug Release)
+set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 # testing setting the runtime back and forth and leaving it static
 ucm_set_runtime(STATIC)
