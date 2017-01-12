@@ -6,8 +6,6 @@ include(../cmake/ucm.cmake)
 
 set(UCM_UNITY_BUILD ON)
 
-set(CMAKE_CONFIGURATION_TYPES Debug Release)
-
 # testing setting the runtime back and forth and leaving it static
 ucm_set_runtime(STATIC)
 ucm_print_flags()
@@ -18,14 +16,6 @@ message("")
 ucm_set_runtime(STATIC)
 ucm_print_flags()
 message("")
-
-#ucm_add_flags(-D_BONJOUR)
-#ucm_add_flags(-D_HELLO CONFIG DEBUG RELEASE)
-#ucm_add_linker_flags(-D_HOLA)
-#ucm_add_linker_flags(-D_HALLO CONFIG DEBUG RELEASE)
-#ucm_print_flags()
-
-#message("")
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     ucm_add_flags(CXX -fvisibility=hidden)
