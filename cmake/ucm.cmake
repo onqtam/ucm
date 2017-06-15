@@ -19,7 +19,7 @@ if(NOT COMMAND cotire)
     include(${CMAKE_CURRENT_LIST_DIR}/../cotire/CMake/cotire.cmake OPTIONAL)
 endif()
 
-if(COMMAND cotire AND "1.7.7" VERSION_LESS "${COTIRE_CMAKE_MODULE_VERSION}")
+if(COMMAND cotire AND "1.7.8" VERSION_LESS "${COTIRE_CMAKE_MODULE_VERSION}")
     set(ucm_with_cotire 1)
 else()
     set(ucm_with_cotire 0)
