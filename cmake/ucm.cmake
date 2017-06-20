@@ -87,7 +87,7 @@ macro(ucm_add_linker_flags)
     endif()
 
     foreach(CONFIG ${ARG_CONFIG})
-        string(TOUPPER "${ARG_CONFIG}" ARG_CONFIG)
+        string(TOUPPER "${CONFIG}" CONFIG)
     
         if(NOT ${ARG_EXE} AND NOT ${ARG_MODULE} AND NOT ${ARG_SHARED} AND NOT ${ARG_STATIC})
             set(ARG_EXE 1)
