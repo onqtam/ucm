@@ -251,8 +251,8 @@ macro(ucm_print_flags)
     message("")
 endmacro()
 
-# Set xcode attributes 
-# name value CONFIG config1 conifg2..
+# ucm_set_xcode_attrib
+# Set xcode attributes - name value CONFIG config1 conifg2..
 macro(ucm_set_xcode_attrib)
     cmake_parse_arguments(ARG "" "CLEAR" "CONFIG" ${ARGN})
 
