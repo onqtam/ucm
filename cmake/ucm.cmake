@@ -251,6 +251,35 @@ macro(ucm_print_flags)
     message("")
 endmacro()
 
+# Set xcode attributes 
+# name value CONFIG config1 conifg2..
+macro(ucm_set_xcode_attrib)
+    cmake_parse_arguments(ARG "" "CLEAR" "CONFIG" ${ARGN})
+
+    if(NOT ARG_CONFIG)
+        set(ARG_CONFIG " ")
+    endif()
+
+    foreach(CONFIG ${ARG_CONFIG})
+        # determine to which attributes to add
+        if(${CONFIG} STREQUAL " ")
+            if(${ARG_CLEAR})
+                # clear the old flags
+                unset(CMAKE_XCODE_ATTRIBUTE_${ARGV0})
+            else()
+                set(CMAKE_XCODE_ATTRIBUTE_${ARGV0} ${ARGV1})
+            endif()
+        else()
+            if(${ARG_CLEAR})
+                # clear the old flags
+                unset(CMAKE_XCODE_ATTRIBUTE_${ARGV0}[variant=${CONFIG}])
+            else()
+                set(CMAKE_XCODE_ATTRIBUTE_${ARGV0}[variant=${CONFIG}] ${ARGV1})
+            endif()
+        endif()
+    endforeach()
+endmacro()
+
 # ucm_count_sources
 # Counts the number of source files
 macro(ucm_count_sources)

@@ -30,6 +30,7 @@ Documentation
 - [ucm_add_linker_flags](#ucm_add_linker_flags)
 - [ucm_set_linker_flags](#ucm_set_linker_flags)
 - [ucm_set_runtime](#ucm_set_runtime)
+- [ucm_set_xcode_attrib](#ucm_set_xcode_attrib)
 - [ucm_add_files](#ucm_add_files)
 - [ucm_add_dirs](#ucm_add_dirs)
 - [ucm_count_sources](#ucm_count_sources)
@@ -131,6 +132,19 @@ CMAKE_C_FLAGS_RELEASE: /MT /O2 /Ob2 /D NDEBUG
 CMAKE_CXX_FLAGS_RELEASE: /MT /O2 /Ob2 /D NDEBUG
 CMAKE_C_FLAGS:  /DWIN32 /D_WINDOWS /W3 /W4
 CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
+```
+##### <a name="ucm_set_xcode_attrib"></a>macro ```ucm_set_xcode_attrib(name value [CLEAR] [CONFIG <config>])```
+
+Sets an Xcode attribute:
+
+```cmake
+ucm_set_xcode_attrib(DEAD_CODE_STRIPPING "YES" CONFIG Debug)
+```
+
+will result in:
+
+```
+CMAKE_XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING[variant=Debug]: "YES"
 ```
 
 ##### <a name="ucm_add_files"></a>macro ```ucm_add_files(src1 src2 scr3... TO <sources> [FILTER_POP <num>])```
