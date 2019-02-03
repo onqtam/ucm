@@ -135,15 +135,18 @@ CMAKE_CXX_FLAGS:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4
 ```
 ##### <a name="ucm_set_xcode_attrib"></a>macro ```ucm_set_xcode_attrib(name value [CLEAR] [CONFIG <config>])```
 
-Sets an Xcode attribute:
+Sets an Xcode attribute optionally per-configuration:
 
 ```cmake
-ucm_set_xcode_attrib(DEAD_CODE_STRIPPING "YES" CONFIG Debug)
+ucm_set_xcode_attrib(DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
+ucm_set_xcode_attrib(DEAD_CODE_STRIPPING "YES" CONFIG Debug Release)
 ```
 
 will result in:
 
 ```
+CMAKE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym"
+CMAKE_XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING[variant=Debug]: "YES"
 CMAKE_XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING[variant=Debug]: "YES"
 ```
 
