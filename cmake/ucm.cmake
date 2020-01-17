@@ -244,11 +244,11 @@ endmacro()
 # Prints all compiler flags for all configurations
 macro(ucm_print_flags)
     ucm_gather_flags(1 flags_configs)
-    message("")
+    message(STATUS "")
     foreach(flags ${flags_configs})
-        message("${flags}: ${${flags}}")
+        message(STATUS "${flags}: ${${flags}}")
     endforeach()
-    message("")
+    message(STATUS "")
 endmacro()
 
 # ucm_set_xcode_attrib
