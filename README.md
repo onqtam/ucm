@@ -270,4 +270,4 @@ How a unity target looks in the IDE:
 Unity builds
 ------------
 
-For all the pros and cons checkout my [blog post](http://onqtam.com/programming/2018-07-07-unity-builds/).
+For all the pros and cons checkout my [blog post](http://onqtam.github.io/programming/2018-07-07-unity-builds/).
