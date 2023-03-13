@@ -27,6 +27,7 @@ Documentation
 - [ucm_print_flags](#ucm_print_flags)
 - [ucm_add_flags](#ucm_add_flags)
 - [ucm_set_flags](#ucm_set_flags)
+- [ucm_remove_flags](#ucm_remove_flags)
 - [ucm_add_linker_flags](#ucm_add_linker_flags)
 - [ucm_set_linker_flags](#ucm_set_linker_flags)
 - [ucm_set_runtime](#ucm_set_runtime)
@@ -85,6 +86,15 @@ ucm_set_flags(CXX) # will clear CMAKE_CXX_FLAGS
 ucm_set_flags() # will clear both CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 ucm_set_flags(CXX -O3) # will set CMAKE_CXX_FLAGS
 ucm_set_flags(-O3 -Wall CONFIG Debug) # will set CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
+```
+
+##### <a name="ucm_remove_flags"></a>macro ```ucm_remove_flags([C] [CXX] [CONFIG <config>] flag1 flag2 flag3...)```
+
+Removes the flags from a different set depending on it's options - examples:
+```cmake
+ucm_remove_flags(CXX /EHsc /GR) # will remove from CMAKE_CXX_FLAGS
+ucm_remove_flags(/W3) # will remove from both CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
+ucm_remove_flags(/RTC1 CONFIG Debug) # will remove from CMAKE_C_FLAGS_DEBUG and CMAKE_CXX_FLAGS_DEBUG
 ```
 
 ##### <a name="ucm_add_linker_flags"></a>macro ```ucm_add_linker_flags([EXE] [MODULE] [SHARED] [STATIC] [CONFIG <config>] flag1 flag2 flag3...)```
